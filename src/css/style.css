@@ -221,8 +221,12 @@ nav ul li {
 nav ul li a {
     padding: 10px;
     color: var(--light-color);
-    font-size: var(--font-size-title2);
+    font-size: var(--font-size1);
     cursor: pointer;
+}
+
+nav ul li .active {
+    color: #a0a0a0;
 }
 
 #content {
@@ -283,7 +287,7 @@ nav ul li a {
 
 #search {
     display: flex;
-    padding: 10px;
+    padding: 3px 7px;
     border: 1px solid var(--color-line);
     border-radius: 30px;
 }
@@ -291,7 +295,7 @@ nav ul li a {
 #search input {
     background: transparent;
     width: 100%;
-    padding: 10px;
+    padding: 7px;
     border: none;
     outline: none;
     font-size: var(--font-size2);
@@ -311,7 +315,7 @@ nav ul li a {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    padding: 20px 20px 170px 20px;
+    padding: 20px;
     gap: 20px;
     overflow: auto;
 }
@@ -324,6 +328,23 @@ nav ul li a {
 
 #feed::-webkit-scrollbar-thumb {
     background: #242424;
+}
+
+#feed h1 {
+    font-size: var(--font-size1);
+    font-weight: 600;
+}
+
+#feed #subtitle-news {
+    margin-top: -10px;
+    margin-bottom: 5px;
+    font-size: var(--font-size2);
+    font-weight: 500;
+    color: #dfdfdf;
+}
+
+#feed #subtitle-news span {
+    font-weight: 600;
 }
 
 .post {
@@ -375,6 +396,26 @@ nav ul li a {
     display: flex;
     width: 100%;
     height: fit-content;
+}
+
+#ctn-back-top {
+    margin-top: 20px;
+    margin-bottom: 190px;
+    display: flex;
+    justify-content: center;
+}
+
+#back-top a {
+    display: flex;
+    width: fit-content;
+    padding: 7px 10px;
+    border: 1px solid var(--color-line);
+    border-radius: 50px;
+    background: var(--dark-color1);
+    font-size: var(--font-size3);
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--light-color);
 }
 
 /* style-chat */
