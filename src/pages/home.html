@@ -4,24 +4,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="website icon" href="../assets/img/icons/icon-fiap-light.png">
     <title>FIAP - home</title>
 </head>
 
 <body>
+
+    <aside id="menu-aside">
+        <section class="ctn-my-profile">
+            <section class="my-profile">
+                <img src="../assets/img/img-profile/img-user/img-default.avif" alt="img-user">
+                <section class="ctn-user">
+                    <h1 id="user_name"><a href="./profile.html">Leonardo Silva</a></h1>
+                    <h2 id="id_user"><a href="./profile.html">@leeosilvp</a></h2>
+                </section>
+                <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+            </section>
+
+            <section class="following-followers">
+                <h2><span id="following">0</span> Seguindo</h2>
+                <h2><span id="followers">0</span> Seguidores</h2>
+            </section>
+        </section>
+        
+        <section class="links-menu">
+            <nav>
+                <ul>
+                    <li><a href="./profile.html"><i class="fa-regular fa-user" style="margin-right: 15px;"></i>Perfil</a></li>
+                    <li><a href="./search.html"><i class="fa-solid fa-search" style="margin-right: 15px;"></i>Search</a></li>
+                    <li><a href="./news.html"><i class="fa-regular fa-newspaper" style="margin-right: 15px;"></i>FIAPnews</a></li>
+                    <li><a href="./chat.html"><i class="fa-regular fa-comments" style="margin-right: 15px;"></i>chat<span>Beta</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-user-check" style="margin-right: 15px;"></i>Follower request</a></li>
+                    <li><a href="https://www2.fiap.com.br/"><i class="fa-regular fa-address-book" style="margin-right: 15px;"></i>Student portal</a></li>
+                    <li><a href="https://fiap-csm.symplicity.com/"><i class="fa-solid fa-flask" style="margin-right: 15px;"></i>Talent lab</a></li>
+                    <li><a href="https://on.fiap.com.br/"><i class="fa-solid fa-power-off" style="margin-right: 15px;"></i>FIAP on</a></li>
+                    <li><a href="#"><i class="fa-solid fa-gear" style="margin-right: 15px;"></i>Settings</a></li>
+                    <li><a href="#"><i class="fa-solid fa-ellipsis" style="margin-right: 15px;"></i>More</a></li>
+                </ul>
+            </nav>
+        </section>
+    </aside>
+    
     <main id="hero">
         <section id="nav">
             <nav>
                 <ul>
-                    <li><a href="./home.html" class="active"><i class="fa-solid fa-house"></i></a></li>
+                    <li><a href="./home.html"><i class="fa-solid fa-house"></i></a></li>
                     <li><a href="./search.html"><i class="fa-solid fa-search"></i></a></li>
-                    <li><a href="./news.html"><i class="fa-solid fa-newspaper"></i></a></li>
-                    <li><a href="./chat.html"><i class="fa-solid fa-comments"></i></a></li>
-                    <li><a href="./profile.html"><i class="fa-solid fa-user"></i></a></li>
+                    <li><a href="./news.html"><i class="fa-regular fa-newspaper"></i></a></li>
+                    <li><a href="./chat.html"><i class="fa-regular fa-comments"></i></a></li>
+                    <li><a href="./profile.html"><i class="fa-regular fa-user"></i></a></li>
                 </ul>
             </nav>
+        </section>
+
+        <section class="img-user-header" id="btn-menu-aside">
+            <img src="../assets/img/img-profile/img-user/img-default.avif" alt="img-user">
         </section>
 
         <section id="content">
