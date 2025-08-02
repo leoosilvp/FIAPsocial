@@ -267,6 +267,7 @@ nav ul li .active {
 .img-user-header img{
     display: flex;
     width: 40px;
+    border: 1px solid var(--color-line);
     border-radius: 50%;
 }
 
@@ -372,7 +373,7 @@ nav ul li .active {
 }
 
 /* style-home */
-#feed{
+#feed-home{
     display: flex;
     flex-direction: column;
     width: 100%;
