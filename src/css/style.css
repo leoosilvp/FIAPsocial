@@ -538,12 +538,19 @@ nav ul li .active {
     color: #a8a8a8;
     outline: none;
     border: none;
+    cursor: pointer;
 }
 
 .ctn-engagement button i{
     display: flex;
     gap: 5px;
 }
+
+.ctn-engagement .active i {
+    font-weight: 600;
+    color: #e74c3c;
+}
+
 .engagement{
     display: flex;
     justify-content: space-between;

@@ -11,3 +11,4 @@ closeAside.addEventListener('click', () => {
     btnShowAside.style.display = 'flex';
     displayAside.style.left = '-80vw';
 })
+
