@@ -523,6 +523,44 @@ nav ul li .active {
     height: fit-content;
 }
 
+.ctn-engagement{
+    padding: 0px 5px 0px 5px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.ctn-engagement button{
+    display: flex;
+    background: transparent;
+    font-size: var(--font-size3);
+    color: #a8a8a8;
+    outline: none;
+    border: none;
+}
+
+.ctn-engagement button i{
+    display: flex;
+    gap: 5px;
+}
+.engagement{
+    display: flex;
+    justify-content: space-between;
+    width: 120%;
+}
+
+.engagement button{
+    display: flex;
+}
+
+.more{
+    display: flex;
+    justify-content: end;
+    width: 210px;
+    gap: 15px;
+}
+
 #ctn-back-top {
     margin-top: 20px;
     margin-bottom: 210px;
