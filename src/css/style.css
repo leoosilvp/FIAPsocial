@@ -718,6 +718,36 @@ nav ul li .active {
     font-weight: 600;
 }
 
+#change-feed{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.btn-change-feed{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
+    box-shadow: 0px 0px 0px 0px var(--color-line);
+}
+
+.btn-change-feed a{
+    text-decoration: none;
+    font-size: var(--font-size2);
+    color: #929292;
+}
+
+#change-feed .active{
+    display: flex;
+    box-shadow: 0px 2px 0px 0px #0084ff;
+}
+
+#change-feed .active a{
+    color: var(--light-color);
+}
+
 #feed {
     display: flex;
     flex-direction: column;
@@ -823,4 +853,82 @@ nav ul li .active {
     display: flex;
     width: 100%;
     height: fit-content;
+}
+
+.no-post{
+    display: flex;
+    flex-direction: column;
+}
+
+/* style-feed-liked-posts */
+#feed-liked-posts{
+    margin-bottom: 190px;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+
+#feed-liked-posts h1{
+    margin: 55px;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+    font-size: var(--font-size-title2);
+    font-weight: 600;
+}
+
+#feed-liked-posts h2{
+    margin: 55px;
+    margin-top: 15px;
+    display: flex;
+    font-size: var(--font-size2);
+    font-weight: 400;
+    color: #9b9b9b;
+}
+
+/* style-feed-liked-posts */
+#feed-saved-posts{
+    margin-bottom: 190px;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+
+.no-post{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#feed-saved-posts h1{
+    margin: 55px;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+    font-size: var(--font-size-title2);
+    font-weight: 600;
+}
+
+#feed-saved-posts h2{
+    margin: 55px;
+    margin-top: 15px;
+    display: flex;
+    font-size: var(--font-size2);
+    font-weight: 400;
+    color: #9b9b9b;
+}
+
+.no-post a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: var(--font-size2);
+    font-weight: 600;
+    color: var(--dark-color);
+    background: var(--light-color);
 }

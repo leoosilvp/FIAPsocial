@@ -67,4 +67,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     observer.observe(post);
   });
+
+
+  const buttonMap = {
+        'btn-section-feed': 'feed',
+        'btn-section-liked-posts': 'feed-liked-posts',
+        'btn-section-saved-posts': 'feed-saved-posts'
+    };
+
+    const buttons = document.querySelectorAll('#change-feed .btn-change-feed');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove a classe 'active' de todos os botões
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            // Oculta todas as seções
+            Object.values(buttonMap).forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) section.style.display = 'none';
+            });
+
+            // Exibe a seção correspondente
+            const a = button.querySelector('a');
+            const targetId = buttonMap[a.id];
+            const sectionToShow = document.getElementById(targetId);
+            if (sectionToShow) sectionToShow.style.display = 'flex';
+        });
+    });
 });
