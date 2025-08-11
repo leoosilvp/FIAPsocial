@@ -1,5 +1,5 @@
 var btnShowAside = document.getElementById("btn-menu-aside");
-var displayAside = document.getElementById("menu-aside")
+var displayAside = document.getElementById("menu-aside");
 var closeAside = document.getElementById("content");
 
 btnShowAside.addEventListener('click', () => {
@@ -10,6 +10,18 @@ btnShowAside.addEventListener('click', () => {
 closeAside.addEventListener('click', () => {
     btnShowAside.style.display = 'flex';
     displayAside.style.left = '-80vw';
+    displayConfig.style.display = 'none';
+})
+
+var btnShowConfig = document.getElementById("btn-show-config");
+var displayConfig = document.getElementById("ctn-card-config");
+
+btnShowConfig.addEventListener('click', () => {
+    if(displayConfig.style.display == 'flex'){
+        displayConfig.style.display = 'none';
+    }else{
+        displayConfig.style.display = 'flex';
+    }
 })
 
 // news api
@@ -36,16 +48,16 @@ function createPost(article) {
 
     return `
     <article class="post-news">
-      <section class="img-post-news">
+    <section class="img-post-news">
         <img src="${imgSrc}" alt="img-post-news" />
-      </section>
-      <section class="content-post-news">
+    </section>
+    <section class="content-post-news">
         <h1 class="title">${title}</h1>
         <h2 class="subtitle">${subtitle}</h2>
         <p class="date">${date}</p>
-      </section>
+    </section>
     </article>
-  `;
+`;
 }
 
 function loadNews() {
@@ -69,4 +81,3 @@ function loadNews() {
 }
 
 document.addEventListener("DOMContentLoaded", loadNews);
-

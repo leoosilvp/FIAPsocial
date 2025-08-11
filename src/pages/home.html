@@ -11,7 +11,7 @@
 </head>
 
 <body>
-
+    
     <aside id="menu-aside">
         <section class="ctn-my-profile">
             <section class="my-profile">
@@ -20,12 +20,20 @@
                     <h1 id="user_name"><a href="./profile.html">Leonardo Silva</a></h1>
                     <h2 id="id_user"><a href="./profile.html">@leeosilvp</a></h2>
                 </section>
-                <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                <a id="btn-show-config" href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
             </section>
 
             <section class="following-followers">
                 <h2><span id="following">0</span> Seguindo</h2>
                 <h2><span id="followers">0</span> Seguidores</h2>
+            </section>
+
+            <section id="ctn-card-config">
+                <article id="card-config">
+                    <a id="btn-change-account" href="#"><i class="fa-solid fa-users"></i> Change account</a>
+                    <a id="btn-add-account" href="#"><i class="fa-solid fa-user-plus"></i> Add account</a>
+                    <span><a href="../../index.html"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log-out</a></span>
+                </article>
             </section>
         </section>
 
@@ -92,6 +100,6 @@
     </main>
 </body>
 
-<script src="../js/script.js"></script>
+<script src="../js/script.js" defer></script>
 
 </html>
