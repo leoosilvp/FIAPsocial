@@ -206,7 +206,7 @@ body {
     right: 15px;
 }
 
-.ctn-btn-post a{
+.ctn-btn-post a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -346,6 +346,10 @@ nav ul li .active {
     gap: 15px;
 }
 
+.more .active i {
+    color: #a8a8a8;
+}
+
 /* style-menu-aside */
 #menu-aside {
     position: absolute;
@@ -418,14 +422,14 @@ nav ul li .active {
 }
 
 
-#ctn-card-config{
+#ctn-card-config {
     display: none;
     position: absolute;
     top: 50px;
     right: 25px;
 }
 
-#card-config{
+#card-config {
     display: flex;
     width: 200px;
     padding: 15px;
@@ -437,7 +441,7 @@ nav ul li .active {
     gap: 5px;
 }
 
-#card-config a{
+#card-config a {
     text-decoration: none;
     display: flex;
     width: fit-content;
@@ -447,11 +451,11 @@ nav ul li .active {
     gap: 10px;
 }
 
-#card-config a:hover{
+#card-config a:hover {
     background: #303030;
 }
 
-#card-config span a{
+#card-config span a {
     background: red;
 }
 
@@ -987,13 +991,15 @@ nav ul li .active {
     height: 100vh;
 }
 
-.no-post {
+.no-post-liked,
+.no-post-saved {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.no-post h1 {
+.no-post-liked h1,
+.no-post-saved h1 {
     margin: 55px;
     margin-bottom: 0;
     display: flex;
@@ -1002,7 +1008,8 @@ nav ul li .active {
     font-weight: 600;
 }
 
-.no-post h2 {
+.no-post-liked h2,
+.no-post-saved h2 {
     margin: 55px;
     margin-top: 15px;
     display: flex;
@@ -1011,7 +1018,8 @@ nav ul li .active {
     color: #9b9b9b;
 }
 
-.no-post a {
+.no-post-liked a,
+.no-post-saved a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1035,23 +1043,23 @@ nav ul li .active {
 }
 
 /* style-mkpost */
-#header-mkpost{
+#header-mkpost {
     display: flex;
     justify-content: space-between;
     padding: 10px;
 }
 
-#header-mkpost a{
+#header-mkpost a {
     font-size: var(--font-size1);
     color: var(--light-color);
 }
 
-#btn-post{
+#btn-post {
     display: flex;
     gap: 20px;
 }
 
-#btn-post #btn-draft{
+#btn-post #btn-draft {
     background: transparent;
     border: none;
     outline: none;
@@ -1059,7 +1067,7 @@ nav ul li .active {
     color: var(--primary-color);
 }
 
-#btn-post #btn-publish{
+#btn-post #btn-publish {
     background: var(--primary-color);
     padding: 7px 20px;
     font-size: var(--font-size2);
@@ -1069,7 +1077,7 @@ nav ul li .active {
     border-radius: 50px;
 }
 
-#box-post{
+#box-post {
     display: flex;
     width: 100vw;
     height: 100vh;
@@ -1077,7 +1085,7 @@ nav ul li .active {
     gap: 10px;
 }
 
-#box-post img{
+#box-post img {
     margin-top: -10px;
     display: flex;
     width: 40px;
@@ -1085,7 +1093,7 @@ nav ul li .active {
     border-radius: 50%;
 }
 
-#box-post textarea{
+#box-post textarea {
     position: relative;
     display: flex;
     width: 100%;
