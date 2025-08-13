@@ -29,6 +29,81 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }, { threshold: 0.6 });
 
+  // Menu-post
+  let menuAberto = null;
+
+  // Abrir/fechar menu
+  document.querySelectorAll("#btn-config-post").forEach(botao => {
+    botao.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      const post = botao.closest("article.post");
+      if (!post) return;
+
+      const menu = post.querySelector(".menu-post");
+      if (!menu) return;
+
+      // Fecha outro menu aberto
+      if (menuAberto && menuAberto !== menu) {
+        menuAberto.classList.remove("ativo");
+      }
+
+      menu.classList.toggle("ativo");
+      menuAberto = menu.classList.contains("ativo") ? menu : null;
+    });
+  });
+
+  // Clique fora fecha qualquer menu aberto
+  document.addEventListener("click", (e) => {
+    if (menuAberto && !menuAberto.contains(e.target) && !e.target.matches("#btn-config-post")) {
+      menuAberto.classList.remove("ativo");
+      menuAberto = null;
+    }
+  });
+
+  // ---------- DELETAR POST ----------
+  document.querySelectorAll(".menu-post .delete-post").forEach(botao => {
+    botao.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const post = botao.closest("article.post");
+      if (!post) return;
+
+      const postId = post.dataset.postId;
+
+      // Remove do feed principal
+      const feedPost = document.querySelector(`#feed article.post[data-post-id="${postId}"]`);
+      if (feedPost) feedPost.remove();
+
+      // Remove da seção curtidos
+      const likedPosts = document.querySelectorAll(`#feed-liked-posts article.post[data-post-id="${postId}"]`);
+      likedPosts.forEach(p => p.remove());
+      atualizarEstadoNoPostLiked(); // atualiza mensagem "sem posts"
+
+      // Remove da seção salvos
+      const savedPosts = document.querySelectorAll(`#feed-saved-posts article.post[data-post-id="${postId}"]`);
+      savedPosts.forEach(p => p.remove());
+      atualizarEstadoNoPostSalvo(); // atualiza mensagem "sem posts"
+
+      menuAberto = null;
+    });
+  });
+
+  // ---------- FUNÇÕES DE ATUALIZAÇÃO DE SEÇÃO ----------
+  function atualizarEstadoNoPostLiked() {
+    const likedSection = document.getElementById("feed-liked-posts");
+    const noPostMessage = document.querySelector(".no-post-liked");
+    const temPosts = likedSection.querySelectorAll("article.post").length > 0;
+    noPostMessage.style.display = temPosts ? "none" : "block";
+  }
+
+  function atualizarEstadoNoPostSalvo() {
+    const savedSection = document.getElementById("feed-saved-posts");
+    const noPostMessage = document.querySelector(".no-post-saved");
+    const temPosts = savedSection.querySelectorAll("article.post").length > 0;
+    noPostMessage.style.display = temPosts ? "none" : "block";
+  }
+
+
   // Inicializa eventos do post
   function inicializarPost(post) {
     const postId = post.dataset.postId;
