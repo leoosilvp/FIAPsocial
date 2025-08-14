@@ -5,12 +5,23 @@ var closeAside = document.getElementById("content");
 btnShowAside.addEventListener('click', () => {
     btnShowAside.style.display = 'none';
     displayAside.style.left = '0vw';
-})
+});
 
 closeAside.addEventListener('click', () => {
     btnShowAside.style.display = 'flex';
     displayAside.style.left = '-80vw';
-})
+});
+
+var btnShowConfig = document.getElementById("btn-show-config");
+var displayConfig = document.getElementById("ctn-card-config");
+
+btnShowConfig.addEventListener('click', () => {
+    if(displayConfig.style.display == 'flex'){
+        displayConfig.style.display = 'none';
+    }else{
+        displayConfig.style.display = 'flex';
+    }
+});
 
 // news api
 const url = `https://newsapi.org/v2/top-headlines?category=technology&apiKey=e5e8cea8009248c98f3132ba370f9e6f`;
