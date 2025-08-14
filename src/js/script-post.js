@@ -1,237 +1,203 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const visiblePosts = new Map();
+  const feed = document.getElementById("feed") || document.getElementById("feed-home");
+  const likedSection = document.getElementById("feed-liked-posts");
+  const savedSection = document.getElementById("feed-saved-posts");
+  let posts = JSON.parse(localStorage.getItem("postsPerfil")) || [];
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const post = entry.target;
-      const postId = post.dataset.postId;
-      if (!postId) return;
-
-      if (entry.isIntersecting) {
-        if (!visiblePosts.has(postId)) {
-          const timeout = setTimeout(() => {
-            const viewsIcon = post.querySelector(".views-icon");
-            const viewsKey = `${postId}-views`;
-            let views = parseInt(localStorage.getItem(viewsKey)) || 0;
-            views++;
-            viewsIcon.textContent = ` ${views}`;
-            localStorage.setItem(viewsKey, views);
-            visiblePosts.delete(postId);
-          }, 2000);
-          visiblePosts.set(postId, timeout);
-        }
-      } else {
-        if (visiblePosts.has(postId)) {
-          clearTimeout(visiblePosts.get(postId));
-          visiblePosts.delete(postId);
-        }
-      }
-    });
-  }, { threshold: 0.6 });
-
-  // Menu-post
-  let menuAberto = null;
-
-  // Abrir/fechar menu
-  document.querySelectorAll("#btn-config-post").forEach(botao => {
-    botao.addEventListener("click", (e) => {
-      e.stopPropagation();
-
-      const post = botao.closest("article.post");
-      if (!post) return;
-
-      const menu = post.querySelector(".menu-post");
-      if (!menu) return;
-
-      // Fecha outro menu aberto
-      if (menuAberto && menuAberto !== menu) {
-        menuAberto.classList.remove("ativo");
-      }
-
-      menu.classList.toggle("ativo");
-      menuAberto = menu.classList.contains("ativo") ? menu : null;
-    });
-  });
-
-  // Clique fora fecha qualquer menu aberto
-  document.addEventListener("click", (e) => {
-    if (menuAberto && !menuAberto.contains(e.target) && !e.target.matches("#btn-config-post")) {
-      menuAberto.classList.remove("ativo");
-      menuAberto = null;
-    }
-  });
-
-  // ---------- DELETAR POST ----------
-  document.querySelectorAll(".menu-post .delete-post").forEach(botao => {
-    botao.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const post = botao.closest("article.post");
-      if (!post) return;
-
-      const postId = post.dataset.postId;
-
-      // Remove do feed principal
-      const feedPost = document.querySelector(`#feed article.post[data-post-id="${postId}"]`);
-      if (feedPost) feedPost.remove();
-
-      // Remove da seção curtidos
-      const likedPosts = document.querySelectorAll(`#feed-liked-posts article.post[data-post-id="${postId}"]`);
-      likedPosts.forEach(p => p.remove());
-      atualizarEstadoNoPostLiked(); // atualiza mensagem "sem posts"
-
-      // Remove da seção salvos
-      const savedPosts = document.querySelectorAll(`#feed-saved-posts article.post[data-post-id="${postId}"]`);
-      savedPosts.forEach(p => p.remove());
-      atualizarEstadoNoPostSalvo(); // atualiza mensagem "sem posts"
-
-      menuAberto = null;
-    });
-  });
-
-  // ---------- FUNÇÕES DE ATUALIZAÇÃO DE SEÇÃO ----------
-  function atualizarEstadoNoPostLiked() {
-    const likedSection = document.getElementById("feed-liked-posts");
-    const noPostMessage = document.querySelector(".no-post-liked");
-    const temPosts = likedSection.querySelectorAll("article.post").length > 0;
-    noPostMessage.style.display = temPosts ? "none" : "block";
+  function salvarPosts() {
+    localStorage.setItem("postsPerfil", JSON.stringify(posts));
   }
 
-  function atualizarEstadoNoPostSalvo() {
-    const savedSection = document.getElementById("feed-saved-posts");
-    const noPostMessage = document.querySelector(".no-post-saved");
-    const temPosts = savedSection.querySelectorAll("article.post").length > 0;
-    noPostMessage.style.display = temPosts ? "none" : "block";
+  function tempoRelativo(data) {
+    const now = new Date();
+    const diff = Math.floor((now - new Date(data)) / 1000);
+    if (diff < 60) return `${diff}s`;
+    if (diff < 3600) return `${Math.floor(diff / 60)}m`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h`;
+    if (diff < 2592000) return `${Math.floor(diff / 86400)}d`;
+    return `${Math.floor(diff / 2592000)}mo`;
   }
 
-
-  // Inicializa eventos do post
-  function inicializarPost(post) {
-    const postId = post.dataset.postId;
-    if (!postId) return;
-
-    const likeBtn = post.querySelector(".btn-like");
-    const likeIcon = post.querySelector(".like-icon");
-    const saveBtn = post.querySelector(".btn-save-post");
-
-    const likeKey = `${postId}-likes`;
-    const likedKey = `${postId}-liked`;
-    const savedKey = `${postId}-saved`;
-
-    let likeCount = parseInt(localStorage.getItem(likeKey)) || 0;
-    let liked = localStorage.getItem(likedKey) === "true";
-    let saved = localStorage.getItem(savedKey) === "true";
-
-    likeIcon.textContent = ` ${likeCount}`;
-    if (liked) likeBtn.classList.add("active");
-    if (saved) saveBtn.classList.add("active");
-
-    likeBtn.addEventListener("click", () => {
-      liked = !liked;
-      likeCount += liked ? 1 : -1;
-      localStorage.setItem(likeKey, likeCount);
-      localStorage.setItem(likedKey, liked);
-      atualizarTodosOsPosts(postId, "like", liked, likeCount);
-    });
-
-    saveBtn.addEventListener("click", () => {
-      saved = !saved;
-      localStorage.setItem(savedKey, saved);
-      atualizarTodosOsPosts(postId, "save", saved);
-    });
-
-    const viewsIcon = post.querySelector(".views-icon");
-    const viewsKey = `${postId}-views`;
-    viewsIcon.textContent = ` ${parseInt(localStorage.getItem(viewsKey)) || 0}`;
-    observer.observe(post);
+  function atualizarMensagens() {
+    document.querySelector(".no-post-liked").style.display = likedSection.querySelectorAll("article.post").length ? "none" : "flex";
+    document.querySelector(".no-post-saved").style.display = savedSection.querySelectorAll("article.post").length ? "none" : "flex";
   }
 
-  // Atualiza todos os posts iguais no DOM
-  function atualizarTodosOsPosts(postId, tipo, estado, count = null) {
-    document.querySelectorAll(`[data-post-id="${postId}"]`).forEach(p => {
-      if (tipo === "like") {
-        const btn = p.querySelector(".btn-like");
-        const icon = p.querySelector(".like-icon");
-        btn.classList.toggle("active", estado);
-        if (count !== null) icon.textContent = ` ${count}`;
-      } else if (tipo === "save") {
-        const btn = p.querySelector(".btn-save-post");
-        btn.classList.toggle("active", estado);
-      }
-    });
+  // ---------- RENDERIZAÇÃO ----------
+  function renderizarPost(post) {
+    const article = document.createElement("article");
+    article.classList.add("post");
+    article.dataset.postId = post.id;
+    const dateText = post.createdAt ? tempoRelativo(post.createdAt) : "Agora";
 
-    if (tipo === "like") {
-      if (estado) criarCloneCurtido(postId);
-      else removerCloneCurtido(postId);
-    }
-    if (tipo === "save") {
-      if (estado) criarCloneSalvo(postId);
-      else removerCloneSalvo(postId);
-    }
-  }
+    article.innerHTML = `
+      <div class="user">
+        <img src="../assets/img/img-profile/img-user/img-default.avif" alt="img-profile">
+        <section class="ctn-info-user">
+          <section class="info-user">
+            <h1 id="user_name"><a href="./profile.html">Leonardo Silva</a></h1>
+            <h2 id="id_user"><a href="./profile.html">@leeosilvp</a></h2>
+          </section>
+          <section class="conf-post">
+            <p id="dateTime">${dateText}</p>
+            <a id="btn-config-post"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+          </section>
+        </section>
+      </div>
 
-  // ---------- CURTIDOS ----------
-  function criarCloneCurtido(postId) {
-    const original = document.querySelector(`#feed article.post[data-post-id="${postId}"]`);
-    const likedSection = document.getElementById("feed-liked-posts");
-    if (!original || likedSection.querySelector(`[data-post-id="${postId}"]`)) return;
+      <section class="menu-post">
+        <i class="delete-post fa-regular fa-trash-can"> Excluir post</i>
+      </section>
 
-    const clone = original.cloneNode(true);
-    likedSection.appendChild(clone);
-    inicializarPost(clone);
-    atualizarEstadoNoPostLiked();
-  }
+      <div class="card-description">
+        <h2>${post.link ? `${post.texto}<br><a href="${post.link}">${post.link}</a>` : post.texto}</h2>
+      </div>
 
-  function removerCloneCurtido(postId) {
-    const likedSection = document.getElementById("feed-liked-posts");
-    likedSection.querySelectorAll(`[data-post-id="${postId}"]`).forEach(e => e.remove());
-    atualizarEstadoNoPostLiked();
-  }
+      ${post.imagem ? `<div class="img-post"><img src="${post.imagem}" alt=""></div>` : ""}
 
-  function atualizarEstadoNoPostLiked() {
-    const likedSection = document.getElementById("feed-liked-posts");
-    const noPostMessage = document.querySelector(".no-post-liked");
-    const temPosts = likedSection.querySelectorAll("article.post").length > 0;
-    noPostMessage.style.display = temPosts ? "none" : "flex";
-  }
+      <section class="ctn-engagement">
+        <article class="engagement">
+          <div class="comments">
+            <button class="btn-comment"><i class="fa-regular fa-comment comment-icon">0</i></button>
+          </div>
+          <div class="have-idea">
+            <button class="btn-have-idea"><i class="fa-regular fa-lightbulb idea-icon">0</i></button>
+          </div>
+          <div class="like">
+            <button class="btn-like ${post.liked ? "active" : ""}"><i class="fa-regular fa-heart like-icon"> ${post.likesCount}</i></button>
+          </div>
+          <div class="views">
+            <button class="views-counter"><i class="fa-regular fa-chart-bar views-icon"> ${post.viewsCount}</i></button>
+          </div>
+        </article>
+        <article class="more">
+          <button class="btn-share"><i class="fa-solid fa-share-nodes"></i></button>
+          <button class="btn-save-post ${post.saved ? "active" : ""}"><i class="fa-regular fa-bookmark"></i></button>
+          <button class="btn-gift"><i class="fa-solid fa-gift"></i></button>
+        </article>
+      </section>
+    `;
 
-  // ---------- SALVOS ----------
-  function criarCloneSalvo(postId) {
-    const original = document.querySelector(`#feed article.post[data-post-id="${postId}"]`);
-    const savedSection = document.getElementById("feed-saved-posts");
-    if (!original || savedSection.querySelector(`[data-post-id="${postId}"]`)) return;
+    feed.prepend(article);
+    inicializarPost(article, post);
 
-    const clone = original.cloneNode(true);
-    savedSection.appendChild(clone);
-    inicializarPost(clone);
-    atualizarEstadoNoPostSalvo();
-  }
-
-  function removerCloneSalvo(postId) {
-    const savedSection = document.getElementById("feed-saved-posts");
-    savedSection.querySelectorAll(`[data-post-id="${postId}"]`).forEach(e => e.remove());
-    atualizarEstadoNoPostSalvo();
-  }
-
-  function atualizarEstadoNoPostSalvo() {
-    const savedSection = document.getElementById("feed-saved-posts");
-    const noPostMessage = document.querySelector(".no-post-saved");
-    const temPosts = savedSection.querySelectorAll("article.post").length > 0;
-    noPostMessage.style.display = temPosts ? "none" : "flex";
+    if (post.liked) criarCloneCurtido(post);
+    if (post.saved) criarCloneSalvo(post);
+    atualizarMensagens();
   }
 
   // ---------- INICIALIZAÇÃO ----------
-  document.querySelectorAll("#feed article.post").forEach(post => {
-    inicializarPost(post);
-    if (localStorage.getItem(`${post.dataset.postId}-liked`) === "true") criarCloneCurtido(post.dataset.postId);
-    if (localStorage.getItem(`${post.dataset.postId}-saved`) === "true") criarCloneSalvo(post.dataset.postId);
-  });
+  function inicializarPost(article, post) {
+    const postId = post.id;
+    let menuAberto = null;
 
-  atualizarEstadoNoPostLiked();
-  atualizarEstadoNoPostSalvo();
+    // Menu
+    const btnConfig = article.querySelector("#btn-config-post");
+    const menu = article.querySelector(".menu-post");
+    btnConfig?.addEventListener("click", e => {
+      e.stopPropagation();
+      if (!menu) return;
+      if (menuAberto && menuAberto !== menu) menuAberto.classList.remove("ativo");
+      menu.classList.toggle("ativo");
+      menuAberto = menu.classList.contains("ativo") ? menu : null;
+    });
+    document.addEventListener("click", e => {
+      if (menuAberto && !menuAberto.contains(e.target) && !e.target.matches("#btn-config-post")) {
+        menuAberto.classList.remove("ativo");
+        menuAberto = null;
+      }
+    });
 
-  // ---------- BOTÕES DE TROCA DE SEÇÃO ----------
+    // Delete
+    article.querySelector(".delete-post")?.addEventListener("click", () => {
+      posts = posts.filter(p => p.id !== postId);
+      salvarPosts();
+      removerTodosClones(postId);
+      article.remove();
+      atualizarMensagens();
+    });
+
+    // Like
+    const likeBtn = article.querySelector(".btn-like");
+    const likeIcon = article.querySelector(".like-icon");
+    likeBtn?.addEventListener("click", () => {
+      post.liked = !post.liked;
+      post.likesCount += post.liked ? 1 : -1;
+      sincronizarTodosPosts(post);
+      salvarPosts();
+    });
+
+    // Save
+    const saveBtn = article.querySelector(".btn-save-post");
+    saveBtn?.addEventListener("click", () => {
+      post.saved = !post.saved;
+      sincronizarTodosPosts(post);
+      salvarPosts();
+    });
+
+    // Views
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          post.viewsCount++;
+          sincronizarTodosPosts(post);
+          salvarPosts();
+          observer.unobserve(article);
+        }
+      });
+    }, { threshold: 0.5 });
+    observer.observe(article);
+  }
+
+  // ---------- SINCRONIZAÇÃO DE CLONES ----------
+  function sincronizarTodosPosts(post) {
+    // Atualiza todos os clones no feed, liked e saved
+    document.querySelectorAll(`[data-post-id="${post.id}"]`).forEach(p => {
+      p.querySelector(".like-icon").textContent = ` ${post.likesCount}`;
+      p.querySelector(".btn-like").classList.toggle("active", post.liked);
+      p.querySelector(".btn-save-post").classList.toggle("active", post.saved);
+      p.querySelector(".views-icon").textContent = ` ${post.viewsCount}`;
+    });
+
+    post.liked ? criarCloneCurtido(post) : removerCloneCurtido(post.id);
+    post.saved ? criarCloneSalvo(post) : removerCloneSalvo(post.id);
+    atualizarMensagens();
+  }
+
+  function criarCloneCurtido(post) {
+    if (!likedSection.querySelector(`[data-post-id="${post.id}"]`)) {
+      const clone = document.querySelector(`[data-post-id="${post.id}"]`).cloneNode(true);
+      likedSection.prepend(clone); // Mais recente no topo
+      inicializarPost(clone, post);
+    }
+  }
+
+  function removerCloneCurtido(postId) {
+    document.querySelectorAll(`#feed-liked-posts [data-post-id="${postId}"]`).forEach(e => e.remove());
+  }
+
+  function criarCloneSalvo(post) {
+    if (!savedSection.querySelector(`[data-post-id="${post.id}"]`)) {
+      const clone = document.querySelector(`[data-post-id="${post.id}"]`).cloneNode(true);
+      savedSection.prepend(clone); // Mais recente no topo
+      inicializarPost(clone, post);
+    }
+  }
+
+  function removerCloneSalvo(postId) {
+    document.querySelectorAll(`#feed-saved-posts [data-post-id="${postId}"]`).forEach(e => e.remove());
+  }
+
+  function removerTodosClones(postId) {
+    document.querySelectorAll(`[data-post-id="${postId}"]`).forEach(e => e.remove());
+  }
+
+  // ---------- RENDERIZAÇÃO INICIAL ----------
+  posts.forEach(renderizarPost);
+
+  // ---------- TROCA DE SEÇÃO ----------
   const buttonMap = {
-    'btn-section-feed': 'feed',
+    'btn-section-feed': feed.id,
     'btn-section-liked-posts': 'feed-liked-posts',
     'btn-section-saved-posts': 'feed-saved-posts'
   };
@@ -248,6 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const targetId = buttonMap[a.id];
       const sectionToShow = document.getElementById(targetId);
       if (sectionToShow) sectionToShow.style.display = 'flex';
+      atualizarMensagens();
     });
   });
 });

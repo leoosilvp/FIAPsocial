@@ -211,7 +211,6 @@ body {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    font-size: var(--font-size1);
     width: 45px;
     height: 45px;
     border-radius: 50%;
@@ -223,9 +222,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: min-content;
     border: none;
     background: transparent;
+    font-size: var(--font-size2);
+    color: var(--light-color);
 }
 
 
