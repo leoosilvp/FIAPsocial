@@ -12,14 +12,30 @@ closeAside.addEventListener('click', () => {
     displayAside.style.left = '-80vw';
 });
 
+// Seção de logout
 var btnShowConfig = document.getElementById("btn-show-config");
 var displayConfig = document.getElementById("ctn-card-config");
+var contentArea = document.getElementById("content");
 
-btnShowConfig.addEventListener('click', () => {
-    if(displayConfig.style.display == 'flex'){
+// Função para alternar a visibilidade do menu
+function toggleMenu() {
+    if (displayConfig.style.display === 'flex') {
         displayConfig.style.display = 'none';
-    }else{
+    } else {
         displayConfig.style.display = 'flex';
+    }
+}
+
+// Ao clicar no botão, abre/fecha o menu
+btnShowConfig.addEventListener('click', (event) => {
+    event.stopPropagation(); // Impede que o clique no botão feche o menu
+    toggleMenu();
+});
+
+// Ao clicar no conteúdo, fecha o menu se estiver aberto
+contentArea.addEventListener('click', () => {
+    if (displayConfig.style.display === 'flex') {
+        displayConfig.style.display = 'none';
     }
 });
 
