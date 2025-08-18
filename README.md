@@ -1,11 +1,9 @@
 <div align="center">
     <img width="300px" src="./src/assets/img/icons/FIAPsocial.svg">
 
-<br>
-
-[fiapsocial.com.br](https://leoosilvp.github.io/teste-app/)
 </div>
 
+### [fiapsocial.com.br](https://leoosilvp.github.io/teste-app/)
 
 **FIAPsocial** é uma **rede social de estudo** criada como projeto pessoal, destinada a alunos da **FIAP** para compartilharem ideias, projetos e conteúdos de interesse acadêmico.  
 
@@ -82,7 +80,14 @@ Você pode rodar o FIAPsocial de duas formas:
    - RM: `564929`  
    - Senha: `leo12345`
 
-### 2️⃣ No navegador do computador usando Live Server
+### 2️⃣ No navegador do desktop usando o link
+1. Abra o link no seu navegador:  
+   [fiapsocial.com.br](https://leoosilvp.github.io/teste-app/)  
+2. Pressione `F12` para abrir as ferramentas de desenvolvedor.  
+3. Ative o **modo de responsividade** e escolha algum modelo de smartphone.  
+4. Faça login usando a conta existente.
+
+### 3️⃣ No navegador do computador usando Live Server
 1. Clone o repositório:
    ```bash
    git clone https://github.com/leoosilvp/teste-app.git
@@ -93,9 +98,7 @@ Você pode rodar o FIAPsocial de duas formas:
 
 4. Ative o modo de responsividade e escolha algum smartphone na barra superior.
 
-5. Faça login usando a conta existente: *leeosilvp*
-   - RM: `564929`  
-   - Senha: `leo12345`
+5. Faça login usando a conta existente.
 
 >⚠️ Lembre-se: Todos os posts são salvos apenas no Local Storage, portanto trocar de navegador ou dispositivo fará com que desapareçam.
 
