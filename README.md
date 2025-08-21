@@ -3,7 +3,7 @@
 
 </div>
 
-### [fiapsocial.com.br](https://leoosilvp.github.io/teste-app/)
+### [fiapsocial.com.br](https://leoosilvp.github.io/FIAPsocial/)
 
 **FIAPsocial** é uma **rede social de estudo** criada como projeto pessoal, destinada a alunos da **FIAP** para compartilharem ideias, projetos e conteúdos de interesse acadêmico.  
 
@@ -75,14 +75,14 @@ Você pode rodar o FIAPsocial de duas formas:
 
 ### 1️⃣ Diretamente no celular
 1. Abra este link no navegador do seu celular:  
-   [fiapsocial.com.br](https://leoosilvp.github.io/teste-app/)  
+   [fiapsocial.com.br](https://leoosilvp.github.io/FIAPsocial/)  
 2. Faça login usando a conta existente: *leeosilvp*
    - RM: `564929`  
    - Senha: `leo12345`
 
 ### 2️⃣ No navegador do desktop usando o link
 1. Abra o link no seu navegador:  
-   [fiapsocial.com.br](https://leoosilvp.github.io/teste-app/)  
+   [fiapsocial.com.br](https://leoosilvp.github.io/FIAPsocial/)  
 2. Pressione `F12` para abrir as ferramentas de desenvolvedor.  
 3. Ative o **modo de responsividade** e escolha algum modelo de smartphone.  
 4. Faça login usando a conta existente.
@@ -90,7 +90,7 @@ Você pode rodar o FIAPsocial de duas formas:
 ### 3️⃣ No navegador do computador usando Live Server
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/leoosilvp/teste-app.git
+   git clone https://github.com/leoosilvp/FIAPsocial.git
 
 2. Abra a pasta do projeto no VS Code e execute o Live Server.
 
